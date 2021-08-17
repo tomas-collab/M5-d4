@@ -2,18 +2,18 @@ import express from 'express'
 import cors from 'cors'
 import listEndPoints from 'express-list-endpoints'
 import authorsRouter from './services/authors/index.js'
-import postRouter from './services/postAuthor/index.js'
 import fileRouter from './services/files/index.js'
 import { notFoundErrorHandler, forbiddenErrorHandler, badRequestErrorHandler, genericServerErrorHandler } from "./errorHandlers.js"
+
 const server = express()
 const port = 3000
+
 //global middleware
 server.use(cors())
 server.use(express.json())
 
 //Routes
 server.use('/authors', authorsRouter)
-server.use('/postAuthor', postRouter)
 server.use('/files',fileRouter)
 
 // error middleware

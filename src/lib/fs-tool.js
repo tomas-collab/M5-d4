@@ -6,7 +6,7 @@ const { readJSON, writeJSON, writeFile } = fs
 
 const postJSONPath = join(dirname(fileURLToPath(import.meta.url)), "../data/post.json")
 const commentJSONPath = join(dirname(fileURLToPath(import.meta.url)), "../data/comment.json")
-const publicFolderPath = join(dirname(fileURLToPath(import.meta.url)), "../../public/blogpost")
+const publicFolderPath = join(dirname(fileURLToPath(import.meta.url)), "../../public/img/blogPost")
 
 export const getPost = () => readJSON(postJSONPath)
 export const writePost = content => writeJSON(postJSONPath, content)

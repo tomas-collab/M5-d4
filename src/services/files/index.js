@@ -1,10 +1,10 @@
 import express from 'express'
 import multer from 'multer'
-import { PostPicture } from '../../lib/fs-tool'
+import { PostPicture } from '../../lib/fs-tool.js'
 
 const fileRouter = express.Router()
 
-filesRouter.post("/register", multer().single("blogPic"), async (req, res, next) => {
+fileRouter.post("/upload", multer().single("blogPic"), async (req, res, next) => {
     try {
       console.log(req.file)
       await PostPicture(req.file.originalname, req.file.buffer)
