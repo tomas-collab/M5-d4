@@ -61,7 +61,7 @@ authorsRouter.delete('/:authorID',(request,response)=>{
     fs.writeFileSync(authorsJSONpath,JSON.stringify(remainingAuthors))
     response.status(204).send()})
 
-authorsRouter.post("/:authorId", multer().single("blogPic"), async (req, res, next) => {
+authorsRouter.post("/:authorId", multer().single("authorPic"), async (req, res, next) => {
         try {
           console.log(req.file)
           await PostAuthorPicture(req.file.originalname, req.file.buffer)
