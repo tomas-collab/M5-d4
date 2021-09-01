@@ -1,7 +1,8 @@
 import express from 'express'
 import { fileURLToPath } from 'url'
 import {dirname,join} from 'path'
-
+import multer from 'multer'
+import { PostAuthorPicture } from '../../lib/fs-tool.js'
 import uniqid from 'uniqid'
 import { postValidation } from './validation.js'
 import expresValidator from 'express-validator'
@@ -10,7 +11,7 @@ const {validationResult} = expresValidator
 
 
 const authorsRouter = express.Router()
-
+const authorsJSONpath = join(dirname(fileURLToPath(import.meta.url)),'author.json')
 
                                  // post 
 authorsRouter.post('/', postValidation,(request,response)=>{
@@ -59,6 +60,16 @@ authorsRouter.delete('/:authorID',(request,response)=>{
     const remainingAuthors = authors.filter(author => author.id !== request.params.authorID)
     fs.writeFileSync(authorsJSONpath,JSON.stringify(remainingAuthors))
     response.status(204).send()})
+
+authorsRouter.post("/:authorId", multer().single("blogPic"), async (req, res, next) => {
+        try {
+          console.log(req.file)
+          await PostAuthorPicture(req.file.originalname, req.file.buffer)
+          res.send("Uploaded!")
+        } catch (error) {
+          next(error)
+        }
+      })
 
 
 export default authorsRouter
