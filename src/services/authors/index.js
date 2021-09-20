@@ -6,6 +6,7 @@ import { PostAuthorPicture } from '../../lib/fs-tool.js'
 import uniqid from 'uniqid'
 import { postValidation } from './validation.js'
 import expresValidator from 'express-validator'
+import fs from 'fs'
 
 const {validationResult} = expresValidator
 

@@ -6,6 +6,8 @@ import uniqid from 'uniqid'
 import multer from 'multer'
 import { postValidation } from './validation.js'
 import expresValidator from 'express-validator'
+import fs from 'fs'
+import { getPost } from '../../lib/fs-tool.js'
 
 const {validationResult} = expresValidator
 
@@ -20,7 +22,8 @@ blogpostsRouter.post('/', postValidation,(request,response)=>{
         response.status(400).send(errorList)
     }else{
         const newblogposts = {id:uniqid(),...request.body,createdAt: new Date()}
-        const blogposts = JSON.parse(fs.readFileSync(blogpostsJSONpath))
+        const JSONPath = join(dirname(fileURLToPath(import.meta.url)),'../../data/post.json')
+        const blogposts = JSON.parse(fs.readFileSync(JSONPath))
         blogposts.push(newblogposts)
 
         fs.writeFileSync(blogpostsJSONpath,JSON.stringify(blogposts))
@@ -44,7 +47,8 @@ blogpostsRouter.post('/:blogId/comments', postValidation,(request,response)=>{
    
                                 //get1
 blogpostsRouter.get('/',(request,response)=>{
-    const fileContent = fs.readFileSync(blogpostsJSONpath)
+    const JSONPath = join(dirname(fileURLToPath(import.meta.url)),'../../data/post.json')
+    const fileContent = fs.readFileSync(JSONPath)
     response.send(JSON.parse(fileContent))
 })
 
